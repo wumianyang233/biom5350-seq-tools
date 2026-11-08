@@ -31,14 +31,18 @@ def gc_content(seq):
     if not counted:
         return 0.0
     return sum(b in "GC" for b in counted) / len(counted)
-
+def at_content(seq):
+    counted = [b for b in seq if b in "ACGT"]
+    if not counted:
+        return 0.0
+    return sum(b in "AT" for b in counted) / len(counted)
 
 def main():
     if len(sys.argv) != 2:
         print(__doc__)
         sys.exit(1)
     for name, seq in read_fasta(sys.argv[1]):
-        print(f"{name}\tLength = {len(seq)}\tGC = {100 * gc_content(seq):.1f}%")
+        print(f"{name}\tLength = {len(seq)}\tGC = {100 * gc_content(seq):.1f}%\tAT = {100 * at_content(seq):.1f}%")
 
 
 if __name__ == "__main__":
